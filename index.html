@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SteamGridDB Search</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #1e1e1e;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    .search-container {
+      text-align: center;
+    }
+    input {
+      padding: 10px;
+      width: 300px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px;
+      font-size: 16px;
+      background-color: #ff6600;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      color: white;
+    }
+    button:hover {
+      background-color: #cc5200;
+    }
+  </style>
+</head>
+<body>
+  <div class="search-container">
+    <h1>SteamGridDB Search</h1>
+    <form id="searchForm" method="get" target="_blank">
+      <!-- Removed the name attribute to handle query parameters manually -->
+      <input type="text" id="searchInput" placeholder="Search SteamGridDB..." required>
+      <button type="submit">Search</button>
+    </form>
+  </div>
+  <script>
+    document.getElementById("searchForm").addEventListener("submit", function(e){
+      e.preventDefault(); // prevent the default submission
+      var searchTerm = document.getElementById("searchInput").value;
+      
+      // Build the q parameter directly from the search term.
+      var qParam = encodeURIComponent(searchTerm);
+      
+      // For the term parameter, prepend a tab character only if there are multiple words.
+      var termValue = searchTerm;
+      if(searchTerm.trim().includes(" ")) {
+        termValue = "\t" + searchTerm;
+      }
+      var termParam = encodeURIComponent(termValue);
+      
+      // Build the complete URL with both parameters.
+      var url = "https://www.steamgriddb.com/search/grids?q=" + qParam + "&term=" + termParam;
+      
+      // Open the URL in a new tab.
+      window.open(url, "_blank");
+    });
+  </script>
+</body>
+</html>
